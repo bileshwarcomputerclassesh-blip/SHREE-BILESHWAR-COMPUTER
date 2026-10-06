@@ -5,6 +5,24 @@ void main() {
   runApp(const BileshwarComputerApp());
 }
 
+// ============================================================
+// APP CONSTANTS
+// ============================================================
+
+const String instituteName = 'SHREE BILESHWAR COMPUTER';
+const String tagline = 'Learn Today • Build Your Tomorrow';
+const String contactNumber = '9558373839';
+
+const Color primaryBlue = Color(0xFF1455D9);
+const Color darkBlue = Color(0xFF0B2E73);
+const Color lightBlue = Color(0xFFEAF2FF);
+const Color orange = Color(0xFFFF8A00);
+const Color green = Color(0xFF16A34A);
+
+// ============================================================
+// APP
+// ============================================================
+
 class BileshwarComputerApp extends StatelessWidget {
   const BileshwarComputerApp({super.key});
 
@@ -12,23 +30,48 @@ class BileshwarComputerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Shree Bileshwar Computer',
+      title: instituteName,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
+        scaffoldBackgroundColor: const Color(0xFFF7F9FC),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primaryBlue,
+          brightness: Brightness.light,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: primaryBlue,
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(14)),
+            borderSide: BorderSide(color: Color(0xFFD9E0EA)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(14)),
+            borderSide: BorderSide(color: Color(0xFFD9E0EA)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(14)),
+            borderSide: BorderSide(
+              color: primaryBlue,
+              width: 2,
+            ),
+          ),
+        ),
       ),
       home: const SplashScreen(),
     );
   }
 }
 
-// ================= CONSTANTS =================
-
-const String instituteName = 'SHREE BILESHWAR COMPUTER';
-const String tagline = 'Learn Today • Build Your Tomorrow';
-const String contactNumber = '9558373839';
-
-// ================= SMS FUNCTION =================
+// ============================================================
+// SMS
+// ============================================================
 
 Future<void> openSms({
   required String studentName,
@@ -58,7 +101,9 @@ Future<void> openSms({
   }
 }
 
-// ================= CALL FUNCTION =================
+// ============================================================
+// CALL
+// ============================================================
 
 Future<void> makeCall() async {
   final Uri phoneUri = Uri.parse('tel:$contactNumber');
@@ -73,7 +118,9 @@ Future<void> makeCall() async {
   }
 }
 
-// ================= SPLASH =================
+// ============================================================
+// SPLASH SCREEN
+// ============================================================
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -88,14 +135,14 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const HomeScreen(),
-          ),
-        );
-      }
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
+      );
     });
   }
 
@@ -107,60 +154,88 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF283593),
-              Color(0xFF5C6BC0),
+              darkBlue,
+              primaryBlue,
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 150,
-              height: 150,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 165,
+                height: 165,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(32),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.18),
+                      blurRadius: 25,
+                      offset: const Offset(0, 12),
+                    ),
+                  ],
+                ),
+                child: Image.asset(
+                  'assets/logo.png',
+                  fit: BoxFit.contain,
+                ),
               ),
-              child: Image.asset(
-                'assets/logo.png',
-                fit: BoxFit.contain,
+
+              const SizedBox(height: 30),
+
+              const Text(
+                instituteName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.5,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 25),
+              const SizedBox(height: 10),
 
-            const Text(
-              instituteName,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              const Text(
+                tagline,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 16,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 12),
+              const SizedBox(height: 45),
 
-            const Text(
-              tagline,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
+              SizedBox(
+                width: 130,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: const LinearProgressIndicator(
+                    minHeight: 5,
+                    backgroundColor: Colors.white24,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Colors.white,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-// ================= HOME =================
+// ============================================================
+// HOME SCREEN
+// ============================================================
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -169,63 +244,155 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(instituteName),
-        centerTitle: true,
+        titleSpacing: 12,
+        title: Row(
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.asset(
+                'assets/logo.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Expanded(
+              child: Text(
+                instituteName,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
+
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            // ------------------------------------------------
+            // HERO BANNER
+            // ------------------------------------------------
+
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(22),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(24),
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xFF283593),
-                    Color(0xFF5C6BC0),
+                    darkBlue,
+                    primaryBlue,
                   ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: primaryBlue.withOpacity(0.25),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 110,
-                    height: 110,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Image.asset(
-                      'assets/logo.png',
-                      fit: BoxFit.contain,
+
+                  Row(
+                    children: [
+                      Container(
+                        width: 78,
+                        height: 78,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: Image.asset(
+                          'assets/logo.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+
+                      const SizedBox(width: 15),
+
+                      const Expanded(
+                        child: Text(
+                          'Build Your\nDigital Future\nWith Us',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 23,
+                            height: 1.08,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  const Text(
+                    'Learn Computer Skills • Grow Your Career',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
                     ),
                   ),
 
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 20),
 
-                  const Text(
-                    instituteName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _heroButton(
+                          context,
+                          title: 'View Courses',
+                          icon: Icons.menu_book_rounded,
+                          color: Colors.white,
+                          textColor: primaryBlue,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const CoursesScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
 
-                  const SizedBox(height: 10),
+                      const SizedBox(width: 10),
 
-                  const Text(
-                    tagline,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
+                      Expanded(
+                        child: _heroButton(
+                          context,
+                          title: 'Enquire Now',
+                          icon: Icons.edit_note_rounded,
+                          color: orange,
+                          textColor: Colors.white,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const EnquiryScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -233,701 +400,405 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            _homeButton(
-              context,
-              Icons.school,
-              'View Courses',
-              const CoursesScreen(),
-            ),
-
-            _homeButton(
-              context,
-              Icons.message,
-              'Enquire Now',
-              const EnquiryScreen(),
-            ),
-
-            _homeButton(
-              context,
-              Icons.phone,
-              'Contact Us',
-              const ContactScreen(),
-            ),
-
-            _homeButton(
-              context,
-              Icons.info,
-              'About Us',
-              const AboutScreen(),
-            ),
-
-            const SizedBox(height: 25),
+            // ------------------------------------------------
+            // QUICK ACTIONS
+            // ------------------------------------------------
 
             const Text(
-              'Popular Courses',
+              'Quick Access',
               style: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontWeight: FontWeight.w800,
               ),
             ),
 
             const SizedBox(height: 12),
 
-            ...courses.take(3).map(
-              (course) => Card(
-                child: ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(Icons.computer),
+            Row(
+              children: [
+                Expanded(
+                  child: _quickAction(
+                    context,
+                    icon: Icons.school_rounded,
+                    title: 'Courses',
+                    color: primaryBlue,
+                    page: const CoursesScreen(),
                   ),
-                  title: Text(course.name),
-                  subtitle: Text(
-                    '${course.duration} • ₹${course.fees}',
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _quickAction(
+                    context,
+                    icon: Icons.message_rounded,
+                    title: 'Enquiry',
+                    color: orange,
+                    page: const EnquiryScreen(),
                   ),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: _quickAction(
+                    context,
+                    icon: Icons.phone_rounded,
+                    title: 'Contact',
+                    color: green,
+                    page: const ContactScreen(),
                   ),
-                  onTap: () {
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 28),
+
+            // ------------------------------------------------
+            // POPULAR COURSES
+            // ------------------------------------------------
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Popular Courses',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+
+                TextButton(
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => CourseDetailsScreen(
-                          course: course,
-                        ),
+                        builder: (_) => const CoursesScreen(),
                       ),
                     );
                   },
+                  child: const Text('View All'),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  static Widget _homeButton(
-    BuildContext context,
-    IconData icon,
-    String title,
-    Widget page,
-  ) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 5,
-        ),
-        leading: Icon(
-          icon,
-          size: 30,
-          color: Colors.indigo,
-        ),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => page,
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
+            const SizedBox(height: 10),
 
-// ================= COURSE MODEL =================
-
-class Course {
-  final String name;
-  final String duration;
-  final int fees;
-  final String details;
-  final List<String> benefits;
-
-  const Course({
-    required this.name,
-    required this.duration,
-    required this.fees,
-    required this.details,
-    required this.benefits,
-  });
-}
-
-const List<Course> courses = [
-  Course(
-    name: 'CCC – Computer Course',
-    duration: '3 Months',
-    fees: 2500,
-    details:
-        'Complete basic computer knowledge including computer fundamentals, internet, MS Office and digital skills.',
-    benefits: [
-      'Basic Computer Knowledge',
-      'MS Office',
-      'Internet & Email',
-      'Digital Skills',
-    ],
-  ),
-
-  Course(
-    name: 'Basic Computer Course',
-    duration: '2 Months',
-    fees: 1999,
-    details:
-        'A beginner-friendly course for students who want to learn essential computer operations.',
-    benefits: [
-      'Computer Fundamentals',
-      'Typing',
-      'MS Word',
-      'Internet Basics',
-    ],
-  ),
-
-  Course(
-    name: 'Tally Prime',
-    duration: '3 Months',
-    fees: 3500,
-    details:
-        'Learn accounting and business management using Tally Prime.',
-    benefits: [
-      'Accounting Basics',
-      'Tally Prime',
-      'GST Basics',
-      'Business Accounting',
-    ],
-  ),
-
-  Course(
-    name: 'Advanced Excel',
-    duration: '2 Months',
-    fees: 2500,
-    details:
-        'Learn advanced Excel functions, formulas, data management and professional spreadsheets.',
-    benefits: [
-      'Advanced Formulas',
-      'Data Management',
-      'Charts',
-      'Professional Reports',
-    ],
-  ),
-
-  Course(
-    name: 'DTP Course',
-    duration: '3 Months',
-    fees: 3000,
-    details:
-        'Learn desktop publishing and professional document and graphic designing basics.',
-    benefits: [
-      'Page Designing',
-      'Document Designing',
-      'Printing Basics',
-      'Graphic Work',
-    ],
-  ),
-
-  Course(
-    name: 'Computer Hardware',
-    duration: '3 Months',
-    fees: 4000,
-    details:
-        'Learn computer hardware components, installation, troubleshooting and maintenance.',
-    benefits: [
-      'Hardware Components',
-      'Computer Assembly',
-      'Troubleshooting',
-      'Maintenance',
-    ],
-  ),
-
-  Course(
-    name: 'Programming Course',
-    duration: '6 Months',
-    fees: 5999,
-    details:
-        'Learn programming fundamentals and build a strong foundation for software development.',
-    benefits: [
-      'Programming Fundamentals',
-      'Problem Solving',
-      'Coding Practice',
-      'Software Development Basics',
-    ],
-  ),
-];
-
-// ================= COURSES =================
-
-class CoursesScreen extends StatelessWidget {
-  const CoursesScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Our Courses'),
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(12),
-        itemCount: courses.length,
-        itemBuilder: (context, index) {
-          final course = courses[index];
-
-          return Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            child: ListTile(
-              contentPadding: const EdgeInsets.all(14),
-              leading: const CircleAvatar(
-                radius: 27,
-                child: Icon(Icons.school),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: courses.length,
+              gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 1.18,
               ),
-              title: Text(
-                course.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                ),
-              ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: Text(
-                  '${course.duration} • ₹${course.fees}',
-                ),
-              ),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-              ),
-              onTap: () {
-                Navigator.push(
+              itemBuilder: (context, index) {
+                final course = courses[index];
+
+                return _courseMiniCard(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => CourseDetailsScreen(
-                      course: course,
-                    ),
-                  ),
+                  course,
                 );
               },
             ),
-          );
+
+            const SizedBox(height: 28),
+
+            // ------------------------------------------------
+            // ABOUT CARD
+            // ------------------------------------------------
+
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: const Color(0xFFE1E7F0),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 55,
+                    height: 55,
+                    decoration: BoxDecoration(
+                      color: lightBlue,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Icon(
+                      Icons.verified_rounded,
+                      color: primaryBlue,
+                      size: 30,
+                    ),
+                  ),
+
+                  const SizedBox(width: 14),
+
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Learn Today • Build Your Tomorrow',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 15,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Practical computer education for students and learners.',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      // ------------------------------------------------------
+      // BOTTOM NAVIGATION
+      // ------------------------------------------------------
+
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 0,
+        onDestinationSelected: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const CoursesScreen(),
+              ),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const EnquiryScreen(),
+              ),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const ContactScreen(),
+              ),
+            );
+          } else if (index == 4) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AboutScreen(),
+              ),
+            );
+          }
         },
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.menu_book_outlined),
+            selectedIcon: Icon(Icons.menu_book),
+            label: 'Courses',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.edit_note_outlined),
+            selectedIcon: Icon(Icons.edit_note),
+            label: 'Enquiry',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.phone_outlined),
+            selectedIcon: Icon(Icons.phone),
+            label: 'Contact',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.info_outline),
+            selectedIcon: Icon(Icons.info),
+            label: 'About',
+          ),
+        ],
       ),
     );
   }
-}
 
-// ================= COURSE DETAILS =================
+  // ==========================================================
+  // HERO BUTTON
+  // ==========================================================
 
-class CourseDetailsScreen extends StatelessWidget {
-  final Course course;
-
-  const CourseDetailsScreen({
-    super.key,
-    required this.course,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Course Details'),
+  static Widget _heroButton(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required Color color,
+    required Color textColor,
+    required VoidCallback onTap,
+  }) {
+    return SizedBox(
+      height: 48,
+      child: ElevatedButton.icon(
+        onPressed: onTap,
+        icon: Icon(
+          icon,
+          color: textColor,
+          size: 21,
+        ),
+        label: Text(
+          title,
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.w800,
+            fontSize: 13,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+        ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18),
+    );
+  }
+
+  // ==========================================================
+  // QUICK ACTION
+  // ==========================================================
+
+  static Widget _quickAction(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required Color color,
+    required Widget page,
+  }) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(18),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => page,
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 6,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color: const Color(0xFFE1E7F0),
+          ),
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              color: color,
+              size: 30,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ==========================================================
+  // COURSE MINI CARD
+  // ==========================================================
+
+  static Widget _courseMiniCard(
+    BuildContext context,
+    Course course,
+  ) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(18),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => CourseDetailsScreen(
+              course: course,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(13),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color: const Color(0xFFE1E7F0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.035),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              course.name,
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 18),
-
-            _infoCard(
-              Icons.access_time,
-              'Duration',
-              course.duration,
-            ),
-
-            _infoCard(
-              Icons.currency_rupee,
-              'Course Fees',
-              '₹${course.fees}',
-            ),
-
-            const SizedBox(height: 15),
-
-            const Text(
-              'Course Details',
-              style: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            Text(
-              course.details,
-              style: const TextStyle(
-                fontSize: 16,
-              ),
-            ),
-
-            const SizedBox(height: 22),
-
-            const Text(
-              'Benefits',
-              style: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 8),
-
-            ...course.benefits.map(
-              (benefit) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5,
-                ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        benefit,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 30),
-
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.message),
-                label: const Text(
-                  'ENQUIRY NOW',
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => EnquiryScreen(
-                        selectedCourse: course.name,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  static Widget _infoCard(
-    IconData icon,
-    String title,
-    String value,
-  ) {
-    return Card(
-      child: ListTile(
-        leading: Icon(
-          icon,
-          color: Colors.indigo,
-        ),
-        title: Text(title),
-        subtitle: Text(
-          value,
-          style: const TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ================= ENQUIRY =================
-
-class EnquiryScreen extends StatefulWidget {
-  final String? selectedCourse;
-
-  const EnquiryScreen({
-    super.key,
-    this.selectedCourse,
-  });
-
-  @override
-  State<EnquiryScreen> createState() => _EnquiryScreenState();
-}
-
-class _EnquiryScreenState extends State<EnquiryScreen> {
-  final nameController = TextEditingController();
-  final mobileController = TextEditingController();
-  final messageController = TextEditingController();
-
-  String? selectedCourse;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedCourse = widget.selectedCourse;
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    mobileController.dispose();
-    messageController.dispose();
-    super.dispose();
-  }
-
-  Future<void> sendEnquiry() async {
-    if (nameController.text.trim().isEmpty ||
-        mobileController.text.trim().isEmpty ||
-        selectedCourse == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Please fill Name, Mobile Number and Course.',
-          ),
-        ),
-      );
-      return;
-    }
-
-    try {
-      await openSms(
-        studentName: nameController.text.trim(),
-        mobile: mobileController.text.trim(),
-        course: selectedCourse!,
-        message: messageController.text.trim(),
-      );
-
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'SMS app opened. Please press Send.',
-          ),
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'SMS app could not be opened.',
-          ),
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Course Enquiry'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18),
-        child: Column(
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Student Name',
-                prefixIcon: Icon(Icons.person),
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: mobileController,
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(
-                labelText: 'Mobile Number',
-                prefixIcon: Icon(Icons.phone),
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 15),
-
-            DropdownButtonFormField<String>(
-              value: selectedCourse,
-              decoration: const InputDecoration(
-                labelText: 'Select Course',
-                prefixIcon: Icon(Icons.school),
-                border: OutlineInputBorder(),
-              ),
-              items: courses
-                  .map(
-                    (course) => DropdownMenuItem(
-                      value: course.name,
-                      child: Text(course.name),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedCourse = value;
-                });
-              },
-            ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: messageController,
-              maxLines: 4,
-              decoration: const InputDecoration(
-                labelText: 'Message / Query',
-                alignLabelWithHint: true,
-                prefixIcon: Icon(Icons.edit),
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
-            SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.send),
-                label: const Text(
-                  'SEND ENQUIRY',
-                  style: TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                onPressed: sendEnquiry,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ================= CONTACT =================
-
-class ContactScreen extends StatelessWidget {
-  const ContactScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contact Us'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
           children: [
             Container(
-              width: 140,
-              height: 140,
-              padding: const EdgeInsets.all(10),
+              width: 42,
+              height: 42,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  color: Colors.indigo,
-                  width: 2,
-                ),
+                color: lightBlue,
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Image.asset(
-                'assets/logo.png',
-                fit: BoxFit.contain,
+              child: Icon(
+                _courseIcon(course.name),
+                color: primaryBlue,
               ),
             ),
 
-            const SizedBox(height: 20),
+            const Spacer(),
 
-            const Text(
-              instituteName,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
+            Text(
+              course.name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
               ),
             ),
 
-            const SizedBox(height: 25),
+            const SizedBox(height: 4),
 
-            Card(
-              child: ListTile(
-                leading: const Icon(Icons.phone),
-                title: const Text('Call Us'),
-                subtitle: const Text(contactNumber),
-                trailing: const Icon(Icons.call),
-                onTap: () async {
-                  try {
-                    await makeCall();
-                  } catch (_) {}
-                },
-              ),
-            ),
-
-            Card(
-              child: ListTile(
-                leading: const Icon(Icons.message),
-                title: const Text('SMS Enquiry'),
-                subtitle: const Text(contactNumber),
-                trailing: const Icon(Icons.sms),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const EnquiryScreen(),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            Card(
-              child: const ListTile(
-                leading: Icon(Icons.location_on),
-                title: Text('Location'),
-                subtitle: Text('Mahuva, Gujarat'),
+            Text(
+              '${course.duration} • ₹${course.fees}',
+              style: const TextStyle(
+                fontSize: 11,
+                color: Colors.black54,
               ),
             ),
           ],
@@ -935,105 +806,26 @@ class ContactScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-// ================= ABOUT =================
+  static IconData _courseIcon(String name) {
+    if (name.contains('Tally')) {
+      return Icons.account_balance_wallet_rounded;
+    }
 
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key});
+    if (name.contains('Excel')) {
+      return Icons.table_chart_rounded;
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('About Us'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 150,
-                height: 150,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(
-                    color: Colors.indigo,
-                    width: 2,
-                  ),
-                ),
-                child: Image.asset(
-                  'assets/logo.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
+    if (name.contains('DTP')) {
+      return Icons.design_services_rounded;
+    }
 
-            const SizedBox(height: 20),
+    if (name.contains('Hardware')) {
+      return Icons.memory_rounded;
+    }
 
-            const Center(
-              child: Text(
-                instituteName,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+    if (name.contains('Programming')) {
+      return Icons.code_rounded;
+    }
 
-            const SizedBox(height: 20),
-
-            const Center(
-              child: Text(
-                tagline,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
-            const Text(
-              'About Shree Bileshwar Computer',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            const Text(
-              'Shree Bileshwar Computer provides computer education '
-              'and skill-based courses for students and learners. '
-              'Our goal is to provide practical computer knowledge '
-              'that helps students build their skills and career.',
-              style: TextStyle(
-                fontSize: 16,
-                height: 1.5,
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            const Text(
-              'Courses include CCC, Basic Computer, Tally Prime, '
-              'Advanced Excel, DTP, Computer Hardware and Programming.',
-              style: TextStyle(
-                fontSize: 16,
-                height: 1.5,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+    return Icons
