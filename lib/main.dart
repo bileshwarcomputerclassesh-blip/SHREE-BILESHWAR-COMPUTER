@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const BileshwarComputerApp());
@@ -21,6 +22,57 @@ class BileshwarComputerApp extends StatelessWidget {
   }
 }
 
+// ================= CONSTANTS =================
+
+const String instituteName = 'SHREE BILESHWAR COMPUTER';
+const String tagline = 'Learn Today • Build Your Tomorrow';
+const String contactNumber = '9558373839';
+
+// ================= SMS FUNCTION =================
+
+Future<void> openSms({
+  required String studentName,
+  required String mobile,
+  required String course,
+  required String message,
+}) async {
+  final smsMessage =
+      'Shree Bileshwar Computer – New Enquiry\n\n'
+      'Student Name: $studentName\n'
+      'Mobile Number: $mobile\n'
+      'Course: $course\n'
+      'Message: $message\n\n'
+      'Please contact the student.';
+
+  final Uri smsUri = Uri.parse(
+    'sms:$contactNumber?body=${Uri.encodeComponent(smsMessage)}',
+  );
+
+  if (await canLaunchUrl(smsUri)) {
+    await launchUrl(
+      smsUri,
+      mode: LaunchMode.externalApplication,
+    );
+  } else {
+    throw Exception('Could not open SMS app');
+  }
+}
+
+// ================= CALL FUNCTION =================
+
+Future<void> makeCall() async {
+  final Uri phoneUri = Uri.parse('tel:$contactNumber');
+
+  if (await canLaunchUrl(phoneUri)) {
+    await launchUrl(
+      phoneUri,
+      mode: LaunchMode.externalApplication,
+    );
+  } else {
+    throw Exception('Could not open phone app');
+  }
+}
+
 // ================= SPLASH =================
 
 class SplashScreen extends StatefulWidget {
@@ -39,7 +91,9 @@ class _SplashScreenState extends State<SplashScreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(
+            builder: (_) => const HomeScreen(),
+          ),
         );
       }
     });
@@ -70,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             SizedBox(height: 25),
             Text(
-              'SHREE BILESHWAR COMPUTER',
+              instituteName,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
@@ -80,7 +134,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             SizedBox(height: 12),
             Text(
-              'Learn Today • Build Your Tomorrow',
+              tagline,
               style: TextStyle(
                 color: Colors.white70,
                 fontSize: 16,
@@ -102,7 +156,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shree Bileshwar Computer'),
+        title: const Text(instituteName),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -126,7 +180,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'SHREE BILESHWAR COMPUTER',
+                    instituteName,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,
@@ -135,7 +189,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Learn Today • Build Your Tomorrow',
+                    tagline,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -149,30 +203,30 @@ class HomeScreen extends StatelessWidget {
 
             _homeButton(
               context,
-              icon: Icons.school,
-              title: 'View Courses',
-              page: const CoursesScreen(),
+              Icons.school,
+              'View Courses',
+              const CoursesScreen(),
             ),
 
             _homeButton(
               context,
-              icon: Icons.message,
-              title: 'Enquire Now',
-              page: const EnquiryScreen(),
+              Icons.message,
+              'Enquire Now',
+              const EnquiryScreen(),
             ),
 
             _homeButton(
               context,
-              icon: Icons.phone,
-              title: 'Contact Us',
-              page: const ContactScreen(),
+              Icons.phone,
+              'Contact Us',
+              const ContactScreen(),
             ),
 
             _homeButton(
               context,
-              icon: Icons.info,
-              title: 'About Us',
-              page: const AboutScreen(),
+              Icons.info,
+              'About Us',
+              const AboutScreen(),
             ),
 
             const SizedBox(height: 25),
@@ -197,7 +251,9 @@ class HomeScreen extends StatelessWidget {
                   subtitle: Text(
                     '${course.duration} • ₹${course.fees}',
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -218,11 +274,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   static Widget _homeButton(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required Widget page,
-  }) {
+    BuildContext context,
+    IconData icon,
+    String title,
+    Widget page,
+  ) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
@@ -242,11 +298,15 @@ class HomeScreen extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+        ),
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => page),
+            MaterialPageRoute(
+              builder: (_) => page,
+            ),
           );
         },
       ),
@@ -404,7 +464,9 @@ class CoursesScreen extends StatelessWidget {
                   '${course.duration} • ₹${course.fees}',
                 ),
               ),
-              trailing: const Icon(Icons.arrow_forward_ios),
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+              ),
               onTap: () {
                 Navigator.push(
                   context,
@@ -480,7 +542,9 @@ class CourseDetailsScreen extends StatelessWidget {
 
             Text(
               course.details,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
 
             const SizedBox(height: 22),
@@ -497,7 +561,9 @@ class CourseDetailsScreen extends StatelessWidget {
 
             ...course.benefits.map(
               (benefit) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 5,
+                ),
                 child: Row(
                   children: [
                     const Icon(
@@ -508,7 +574,9 @@ class CourseDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: Text(
                         benefit,
-                        style: const TextStyle(fontSize: 16),
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ],
@@ -525,7 +593,9 @@ class CourseDetailsScreen extends StatelessWidget {
                 icon: const Icon(Icons.message),
                 label: const Text(
                   'ENQUIRY NOW',
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -552,7 +622,10 @@ class CourseDetailsScreen extends StatelessWidget {
   ) {
     return Card(
       child: ListTile(
-        leading: Icon(icon, color: Colors.indigo),
+        leading: Icon(
+          icon,
+          color: Colors.indigo,
+        ),
         title: Text(title),
         subtitle: Text(
           value,
@@ -599,6 +672,50 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
     mobileController.dispose();
     messageController.dispose();
     super.dispose();
+  }
+
+  Future<void> sendEnquiry() async {
+    if (nameController.text.trim().isEmpty ||
+        mobileController.text.trim().isEmpty ||
+        selectedCourse == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Please fill Name, Mobile Number and Course.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    try {
+      await openSms(
+        studentName: nameController.text.trim(),
+        mobile: mobileController.text.trim(),
+        course: selectedCourse!,
+        message: messageController.text.trim(),
+      );
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'SMS app opened. Please press Send.',
+          ),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'SMS app could not be opened.',
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -678,48 +795,11 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
                 icon: const Icon(Icons.send),
                 label: const Text(
                   'SEND ENQUIRY',
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
                 ),
-                onPressed: () {
-                  if (nameController.text.trim().isEmpty ||
-                      mobileController.text.trim().isEmpty ||
-                      selectedCourse == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Please fill Name, Mobile Number and Course.',
-                        ),
-                      ),
-                    );
-                    return;
-                  }
-
-                  final message =
-                      'Shree Bileshwar Computer – New Enquiry\n\n'
-                      'Student Name: ${nameController.text.trim()}\n'
-                      'Mobile Number: ${mobileController.text.trim()}\n'
-                      'Course: $selectedCourse\n'
-                      'Message: ${messageController.text.trim()}\n\n'
-                      'Please contact the student.';
-
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: const Text('Enquiry Ready'),
-                      content: Text(
-                        'Your enquiry is ready to send by SMS.\n\n'
-                        'To: 9558373839\n\n'
-                        '$message',
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('CLOSE'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onPressed: sendEnquiry,
               ),
             ),
           ],
@@ -753,7 +833,7 @@ class ContactScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             const Text(
-              'SHREE BILESHWAR COMPUTER',
+              instituteName,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 23,
@@ -766,8 +846,14 @@ class ContactScreen extends StatelessWidget {
             Card(
               child: ListTile(
                 leading: const Icon(Icons.phone),
-                title: const Text('Contact Number'),
-                subtitle: const Text('9558373839'),
+                title: const Text('Call Us'),
+                subtitle: const Text(contactNumber),
+                trailing: const Icon(Icons.call),
+                onTap: () async {
+                  try {
+                    await makeCall();
+                  } catch (_) {}
+                },
               ),
             ),
 
@@ -775,15 +861,24 @@ class ContactScreen extends StatelessWidget {
               child: ListTile(
                 leading: const Icon(Icons.message),
                 title: const Text('SMS Enquiry'),
-                subtitle: const Text('9558373839'),
+                subtitle: const Text(contactNumber),
+                trailing: const Icon(Icons.sms),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const EnquiryScreen(),
+                    ),
+                  );
+                },
               ),
             ),
 
             Card(
-              child: ListTile(
-                leading: const Icon(Icons.location_on),
-                title: const Text('Location'),
-                subtitle: const Text('Mahuva, Gujarat'),
+              child: const ListTile(
+                leading: Icon(Icons.location_on),
+                title: Text('Location'),
+                subtitle: Text('Mahuva, Gujarat'),
               ),
             ),
           ],
@@ -821,7 +916,7 @@ class AboutScreen extends StatelessWidget {
 
             const Center(
               child: Text(
-                'SHREE BILESHWAR COMPUTER',
+                instituteName,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
@@ -832,12 +927,14 @@ class AboutScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            const Text(
-              'Learn Today • Build Your Tomorrow',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+            const Center(
+              child: Text(
+                tagline,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
