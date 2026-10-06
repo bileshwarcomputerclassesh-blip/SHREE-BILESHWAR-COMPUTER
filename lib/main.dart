@@ -114,16 +114,26 @@ class _SplashScreenState extends State<SplashScreen> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.computer,
-              size: 90,
-              color: Colors.white,
+            Container(
+              width: 150,
+              height: 150,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Image.asset(
+                'assets/logo.png',
+                fit: BoxFit.contain,
+              ),
             ),
-            SizedBox(height: 25),
-            Text(
+
+            const SizedBox(height: 25),
+
+            const Text(
               instituteName,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -132,9 +142,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 12),
-            Text(
+
+            const SizedBox(height: 12),
+
+            const Text(
               tagline,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white70,
                 fontSize: 16,
@@ -176,20 +189,39 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
                 children: [
-                  Text(
+                  Container(
+                    width: 110,
+                    height: 110,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Image.asset(
+                      'assets/logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+
+                  const SizedBox(height: 18),
+
+                  const Text(
                     instituteName,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
+
+                  const SizedBox(height: 10),
+
+                  const Text(
                     tagline,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -346,6 +378,7 @@ const List<Course> courses = [
       'Digital Skills',
     ],
   ),
+
   Course(
     name: 'Basic Computer Course',
     duration: '2 Months',
@@ -359,6 +392,7 @@ const List<Course> courses = [
       'Internet Basics',
     ],
   ),
+
   Course(
     name: 'Tally Prime',
     duration: '3 Months',
@@ -372,6 +406,7 @@ const List<Course> courses = [
       'Business Accounting',
     ],
   ),
+
   Course(
     name: 'Advanced Excel',
     duration: '2 Months',
@@ -385,6 +420,7 @@ const List<Course> courses = [
       'Professional Reports',
     ],
   ),
+
   Course(
     name: 'DTP Course',
     duration: '3 Months',
@@ -398,6 +434,7 @@ const List<Course> courses = [
       'Graphic Work',
     ],
   ),
+
   Course(
     name: 'Computer Hardware',
     duration: '3 Months',
@@ -411,6 +448,7 @@ const List<Course> courses = [
       'Maintenance',
     ],
   ),
+
   Course(
     name: 'Programming Course',
     duration: '6 Months',
@@ -820,14 +858,25 @@ class ContactScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Contact Us'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Icon(
-              Icons.school,
-              size: 80,
-              color: Colors.indigo,
+            Container(
+              width: 140,
+              height: 140,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(
+                  color: Colors.indigo,
+                  width: 2,
+                ),
+              ),
+              child: Image.asset(
+                'assets/logo.png',
+                fit: BoxFit.contain,
+              ),
             ),
 
             const SizedBox(height: 20),
@@ -904,11 +953,22 @@ class AboutScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(
-              child: Icon(
-                Icons.computer,
-                size: 90,
-                color: Colors.indigo,
+            Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(
+                    color: Colors.indigo,
+                    width: 2,
+                  ),
+                ),
+                child: Image.asset(
+                  'assets/logo.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
 
