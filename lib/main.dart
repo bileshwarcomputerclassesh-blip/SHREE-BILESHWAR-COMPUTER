@@ -2024,3 +2024,28 @@ class AboutScreen extends StatelessWidget {
     );
   }
 }
+class GalleryScreen extends StatelessWidget {
+  const GalleryScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Gallery'),
+      ),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(16),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+          childAspectRatio: 1,
+        ),
+        itemCount: 0,
+        itemBuilder: (context, index) {
+          return const SizedBox();
+        },
+      ),
+    );
+  }
+}
