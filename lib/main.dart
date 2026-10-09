@@ -169,6 +169,7 @@ class _MainNavigationScreenState
   final List<Widget> screens = const [
     HomeScreen(),
     CoursesScreen(),
+    GalleryScreen(),
     EnquiryScreen(),
     ContactScreen(),
     AboutScreen(),
@@ -195,6 +196,11 @@ class _MainNavigationScreenState
             icon: Icon(Icons.menu_book_outlined),
             selectedIcon: Icon(Icons.menu_book_rounded),
             label: 'Courses',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.photo_library_outlined),
+            selectedIcon: Icon(Icons.photo_library_rounded),
+            label: 'Gallery',
           ),
           NavigationDestination(
             icon: Icon(Icons.message_outlined),
@@ -272,8 +278,6 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // HERO
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(22),
@@ -525,7 +529,6 @@ class HomeScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // ABOUT CARD
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(18),
@@ -877,7 +880,6 @@ class CourseDetailsScreen extends StatelessWidget {
           crossAxisAlignment:
               CrossAxisAlignment.start,
           children: [
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(22),
@@ -1207,7 +1209,6 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
             crossAxisAlignment:
                 CrossAxisAlignment.start,
             children: [
-
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -1383,6 +1384,93 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
 }
 
 // ============================================================
+// GALLERY SCREEN
+// ============================================================
+
+class GalleryScreen extends StatelessWidget {
+  const GalleryScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Gallery',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: lightBlue,
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Icon(
+                  Icons.photo_library_rounded,
+                  color: primaryBlue,
+                  size: 55,
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              const Text(
+                'Gallery',
+                style: TextStyle(
+                  color: darkBlue,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              const Text(
+                'Photos and videos will be added here.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 15,
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: lightBlue,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: const Text(
+                  'Gallery content coming soon',
+                  style: TextStyle(
+                    color: darkBlue,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ============================================================
 // CONTACT SCREEN
 // ============================================================
 
@@ -1428,7 +1516,6 @@ class ContactScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(22),
@@ -1616,7 +1703,6 @@ class ContactScreen extends StatelessWidget {
 
 // ============================================================
 // ABOUT SCREEN
-// PDF INFORMATION
 // ============================================================
 
 class AboutScreen extends StatelessWidget {
@@ -1639,8 +1725,6 @@ class AboutScreen extends StatelessWidget {
           crossAxisAlignment:
               CrossAxisAlignment.start,
           children: [
-
-            // HEADER
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(22),
@@ -1708,7 +1792,6 @@ class AboutScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // COMPUTER EDUCATION
             _aboutSection(
               icon: Icons.school_rounded,
               title: 'COMPUTER EDUCATION',
@@ -1738,7 +1821,6 @@ class AboutScreen extends StatelessWidget {
               ],
             ),
 
-            // ONLINE FORMS
             _aboutSection(
               icon: Icons.assignment_rounded,
               title: 'ALL TYPES OF ONLINE FORMS',
@@ -1787,7 +1869,6 @@ class AboutScreen extends StatelessWidget {
               ],
             ),
 
-            // COMPUTER SALES & SERVICE
             _aboutSection(
               icon: Icons.computer_rounded,
               title: 'COMPUTER SALES & SERVICE',
@@ -1804,7 +1885,6 @@ class AboutScreen extends StatelessWidget {
               ],
             ),
 
-            // CCTV
             _aboutSection(
               icon: Icons.videocam_rounded,
               title: 'CCTV SERVICES',
@@ -1823,7 +1903,6 @@ class AboutScreen extends StatelessWidget {
               ],
             ),
 
-            // LEGAL & DOCUMENT
             _aboutSection(
               icon: Icons.description_rounded,
               title: 'LEGAL & DOCUMENT SERVICES',
@@ -1857,7 +1936,6 @@ class AboutScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // CONTACT
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(18),
@@ -1954,7 +2032,6 @@ class AboutScreen extends StatelessWidget {
         crossAxisAlignment:
             CrossAxisAlignment.start,
         children: [
-
           Row(
             children: [
               Container(
@@ -2020,31 +2097,6 @@ class AboutScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-class GalleryScreen extends StatelessWidget {
-  const GalleryScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gallery'),
-      ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(16),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: 1,
-        ),
-        itemCount: 0,
-        itemBuilder: (context, index) {
-          return const SizedBox();
-        },
       ),
     );
   }
